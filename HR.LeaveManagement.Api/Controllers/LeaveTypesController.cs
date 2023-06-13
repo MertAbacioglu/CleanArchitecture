@@ -23,7 +23,7 @@ public class LeaveTypesController : ControllerBase
     }
     // GET: api/<LeaveTypesController>
     [HttpGet]
-    public async Task<List<LeaveTypeDto>> Get()
+    public async Task<ActionResult<Result<List<LeaveTypeDto>>>> Get()
     {
         return await _mediator.Send(new GetLeaveTypesQuery());
     }
