@@ -23,12 +23,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveAllocations.Handlers.Comm
 
         public async Task<Unit> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
         {
-            CreateLeaveAllocationCommandValidator validator = new CreateLeaveAllocationCommandValidator(_leaveTypeRepository);
 
-            FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
-
-            if (validationResult.Errors.Any())
-                throw new BadRequestException("Invalid Leave Allocation Request", validationResult);
 
             // Get Leave type for allocations
             Domain.Entities.LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(request.LeaveTypeId);

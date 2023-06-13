@@ -1,6 +1,7 @@
 ﻿using HR.LeaveManagement.Application.Contracts.Identity;
 using HR.LeaveManagement.Application.Exceptions;
 using HR.LeaveManagement.Application.Models.Identity;
+using HR.LeaveManagement.Domain.Enums;
 using HR.LeaveManagement.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -8,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HR.LeaveManagement.Identity.Services;
 
@@ -62,8 +64,7 @@ public class AuthService : IAuthService
             new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            //new Claim(CustomClaimTypes.Uid, user.Id)
-            new Claim("uid", user.Id) //todo: check this
+            new Claim("uid", user.Id)
         }
         .Union(userClaims)
         .Union(roleClaims);
@@ -92,22 +93,26 @@ public class AuthService : IAuthService
             LastName = request.LastName
         };
 
-        IdentityResult result = _userManager.CreateAsync(user, request.Password).Result;
-
-        if (result.Succeeded)
+        try
         {
-            await _userManager.AddToRoleAsync(user, "Employee");
-            return new RegistrationResponse() { UserId = user.Id };
-        }
-        else
-        {
-            StringBuilder sb = new();
+            IdentityResult result = _userManager.CreateAsync(user, request.Password).Result;
 
-            foreach (IdentityError error in result.Errors)
+            if (result.Succeeded)
             {
-                sb.AppendLine($"{error.Description}\n");
+                await _userManager.AddToRoleAsync(user, Role.Employee.ToString());
+                return new RegistrationResponse() { UserId = user.Id };
             }
-            throw new BadRequestException($"{sb}");
+            else
+            {
+                List<string> errors = result.Errors.Select(x => x.Description).ToList();
+                return new RegistrationResponse() { HasError = true, Errors = errors };
+            }
         }
+        catch (Exception ex)
+        {
+
+            return new RegistrationResponse() { HasError = false, Errors ={ex.Message } };
+        }
+
     }
 }

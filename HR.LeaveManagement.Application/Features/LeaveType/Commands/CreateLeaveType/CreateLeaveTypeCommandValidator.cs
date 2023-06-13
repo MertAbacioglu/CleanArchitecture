@@ -18,15 +18,15 @@ public class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLeaveType
         RuleFor(p => p.Name)
             .NotEmpty().WithMessage("{PropertyName} is required")
             .NotNull()
-            .MaximumLength(70).WithMessage("{PropertyName} must be fewer than {MaxLength} characters");
+            .MaximumLength(70).WithMessage("{PropertyName} must be fewer than {ComparisonValue} characters");
 
         RuleFor(p => p.DefaultDays)
             .LessThan(100).WithMessage("{PropertyName} cannot exceed {MaxValue}")
-            .GreaterThan(1).WithMessage("{PropertyName} cannot be less than {MinValue}");
+            .GreaterThan(1).WithMessage("{PropertyName} cannot be less than {ComparisonValue}");
 
         RuleFor(q => q)
             .MustAsync(LeaveTypeNameUnique)
-            .WithMessage("Leave type already exists");
+            .WithMessage("{PropertyName} already exists");
 
 
         _leaveTypeRepository = leaveTypeRepository;
@@ -36,4 +36,5 @@ public class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLeaveType
     {
         return _leaveTypeRepository.IsLeaveTypeUnique(command.Name);
     }
+
 }

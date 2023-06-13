@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{59970B8E-441E-4513-9F48-463C6F1163D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4A26A615-3845-4209-A519-DBA8A517A136}"
+	ProjectSection(SolutionItems) = preProject
+		HR.LeaveManagement.BlazorUI\Program.cs = HR.LeaveManagement.BlazorUI\Program.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{D6D80127-FF49-4AF7-AFF2-A3ACD3FC1F4A}"
 EndProject

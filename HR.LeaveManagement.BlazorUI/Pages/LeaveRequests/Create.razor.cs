@@ -8,21 +8,21 @@ namespace HR.LeaveManagement.BlazorUI.Pages.LeaveRequests
     public partial class Create
     {
         [Inject]
-        ILeaveTypeService leaveTypeService { get; set; }
+        ILeaveTypeService LeaveTypeService { get; set; }
         [Inject]
-        ILeaveRequestService leaveRequestService { get; set; }
+        ILeaveRequestService LeaveRequestService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
-        LeaveRequestVM LeaveRequest { get; set; } = new LeaveRequestVM();
-        List<LeaveTypeVM> leaveTypeVMs { get; set; } = new List<LeaveTypeVM>();
+        LeaveRequestVM LeaveRequest { get; set; } = new();
+        List<LeaveTypeVM> leaveTypeVMs { get; set; } = new();
 
         protected override async Task OnInitializedAsync()
         {
-            leaveTypeVMs = await leaveTypeService.GetLeaveTypes();
+            leaveTypeVMs = await LeaveTypeService.GetLeaveTypes();
         }
 
         private async Task HandleValidSubmit()
         {
-            await leaveRequestService.CreateLeaveRequest(LeaveRequest);
+            await LeaveRequestService.CreateLeaveRequest(LeaveRequest);
             NavigationManager.NavigateTo("/leaverequests/");
         }
     }

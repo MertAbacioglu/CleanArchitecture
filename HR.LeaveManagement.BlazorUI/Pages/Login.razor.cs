@@ -27,8 +27,6 @@ public partial class Login
 
     protected async Task HandleLogin()
     {
-        Console.WriteLine("HandleLogin method called");
-
         if (await AuthenticationService.AuthenticateAsync(Model.Email, Model.Password))
         {
             NavigationManager.NavigateTo("/");

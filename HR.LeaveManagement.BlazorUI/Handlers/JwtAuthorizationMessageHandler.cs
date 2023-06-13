@@ -14,13 +14,14 @@ public class JwtAuthorizationMessageHandler : DelegatingHandler
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        string token = await _localStorageService.GetItemAsStringAsync("token");
+        string token = await _localStorageService.GetItemAsync<string>("token");
+
+
 
         if (!string.IsNullOrEmpty(token))
         {
 
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            //request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {token}");
 
         }
 

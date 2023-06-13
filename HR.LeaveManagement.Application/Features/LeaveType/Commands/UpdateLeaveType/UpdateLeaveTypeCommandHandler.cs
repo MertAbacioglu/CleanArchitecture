@@ -23,14 +23,14 @@ public class UpdateLeaveTypeCommandHandler : IRequestHandler<UpdateLeaveTypeComm
     public async Task<Unit> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
         //validate incoming data
-        UpdateLeaveTypeCommandValidator validator = new UpdateLeaveTypeCommandValidator(_leaveTypeRepository);
-        ValidationResult validationResult = await validator.ValidateAsync(request);
+        //UpdateLeaveTypeCommandValidator validator = new UpdateLeaveTypeCommandValidator(_leaveTypeRepository);
+        //ValidationResult validationResult = await validator.ValidateAsync(request);
 
-        if (!validationResult.Errors.Any())
-        {
-            _logger.LogInformation($"Validation errors in update request for {nameof(LeaveType)} - {request.Id}");
-            throw new BadRequestException("Invalid Leave type", validationResult);
-        }
+        //if (validationResult.Errors.Any())
+        //{
+        //    _logger.LogInformation($"Validation errors in update request for {nameof(LeaveType)} - {request.Id}");
+        //    throw new FluentValidation.ValidationException("Invalid Leave type");
+        //}
 
         Domain.Entities.LeaveType leaveTypeToUpdate = _mapper.Map<Domain.Entities.LeaveType>(request);
 

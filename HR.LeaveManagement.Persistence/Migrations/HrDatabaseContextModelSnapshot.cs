@@ -150,8 +150,8 @@ namespace HR.LeaveManagement.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 6, 9, 12, 39, 43, 189, DateTimeKind.Local).AddTicks(4239),
-                            DateModified = new DateTime(2023, 6, 9, 12, 39, 43, 189, DateTimeKind.Local).AddTicks(4252),
+                            DateCreated = new DateTime(2023, 6, 12, 2, 39, 1, 693, DateTimeKind.Local).AddTicks(1830),
+                            DateModified = new DateTime(2023, 6, 12, 2, 39, 1, 693, DateTimeKind.Local).AddTicks(1841),
                             DefaultDays = 10,
                             Name = "Vacation"
                         });

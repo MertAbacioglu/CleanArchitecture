@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using HR.LeaveManagement.Application.Wrappers;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;

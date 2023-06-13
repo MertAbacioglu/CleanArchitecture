@@ -23,9 +23,19 @@ public static class IdentityServiceRegistration
         services.AddDbContext<HrLeaveManagementIdentityDbContext>(options =>
                    options.UseSqlServer(configuration.GetConnectionString("HrDatabaseConnectionString")));
 
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<HrLeaveManagementIdentityDbContext>()
-            .AddDefaultTokenProviders();
+        services.AddIdentity<ApplicationUser, IdentityRole>(x =>
+        {
+            x.Password.RequireDigit = false;
+            x.Password.RequireLowercase = false;
+            x.Password.RequireUppercase = false;
+            x.Password.RequireNonAlphanumeric = false;
+            x.Password.RequiredLength = 3;
+            x.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            x.User.RequireUniqueEmail = true;
+            x.SignIn.RequireConfirmedEmail = false;
+        })
+         .AddEntityFrameworkStores<HrLeaveManagementIdentityDbContext>()
+         .AddDefaultTokenProviders();
 
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IUserService, UserService>();
@@ -49,7 +59,7 @@ public static class IdentityServiceRegistration
             };
         });
 
-        //todo : customize the default behavior of the password validator and etc.
+        //todo : oto navigate if someone is not authenticated
         return services;
     }
 }

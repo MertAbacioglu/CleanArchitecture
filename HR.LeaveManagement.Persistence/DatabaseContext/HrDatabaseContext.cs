@@ -1,4 +1,5 @@
-﻿using HR.LeaveManagement.Domain.Common;
+﻿using HR.LeaveManagement.Application.Contracts.Identity;
+using HR.LeaveManagement.Domain.Common;
 using HR.LeaveManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -7,9 +8,10 @@ namespace HR.LeaveManagement.Persistence.DatabaseContext;
 
 public class HrDatabaseContext : DbContext
 {
-    public HrDatabaseContext(DbContextOptions<HrDatabaseContext> options) : base(options)
+    private readonly IUserService _userService;
+    public HrDatabaseContext(DbContextOptions<HrDatabaseContext> options,IUserService userService) : base(options)
     {
-
+        _userService = userService;
     }
 
     public DbSet<LeaveType> LeaveTypes { get; set; }
@@ -29,10 +31,11 @@ public class HrDatabaseContext : DbContext
             {
                 case EntityState.Added:
                     entry.Entity.DateCreated = DateTime.Now;
-                    entry.Entity.DateModified = DateTime.Now;
+                    entry.Entity.CreatedBy = _userService.UserId;
                     break;
                 case EntityState.Modified:
                     entry.Entity.DateModified = DateTime.Now;
+                    entry.Entity.ModifiedBy = _userService.UserId;
                     break;
             }
         }

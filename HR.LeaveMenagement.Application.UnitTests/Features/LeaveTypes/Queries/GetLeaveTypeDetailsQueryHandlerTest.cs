@@ -34,7 +34,7 @@ public class GetLeaveTypeDetailsQueryHandlerTest
     public async Task GetLeaveTypeDetailsTest()
     {
         GetLeaveTypeDetailsQueryHandler handler = new GetLeaveTypeDetailsQueryHandler(_mapper, _mockRepo.Object);
-        LeaveTypeDto result = await handler.Handle(new GetLeaveTypeDetailsQuery(Id:1), CancellationToken.None);
+        LeaveTypeDetailsDto result = await handler.Handle(new GetLeaveTypeDetailsQuery(Id: 1), CancellationToken.None);
         result.ShouldBeOfType<LeaveTypeDto>();
         result.Name.ShouldBe("Test Vacation");
         Assert.Equal(10, result.DefaultDays);

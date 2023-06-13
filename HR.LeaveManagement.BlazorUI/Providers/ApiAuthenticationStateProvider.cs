@@ -28,7 +28,7 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
         string savedToken = await _localStorageService.GetItemAsync<string>("token");
         JwtSecurityToken tokenContent = tokenHandler.ReadJwtToken(savedToken);
 
-        if (tokenContent.ValidTo < DateTime.UtcNow)//todo : check this
+        if (tokenContent.ValidTo < DateTime.UtcNow)
         {
             await _localStorageService.RemoveItemAsync("token");
             return new AuthenticationState(user);
@@ -44,7 +44,7 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
         string savedToken = await _localStorageService.GetItemAsync<string>("token");
         JwtSecurityToken tokenContent = tokenHandler.ReadJwtToken(savedToken);
         List<Claim> claims = tokenContent.Claims.ToList();
-        claims.Add(new(ClaimTypes.Name, tokenContent.Subject));//todo : check this
+        claims.Add(new(ClaimTypes.Name, tokenContent.Subject));
         return claims;
     }
 

@@ -28,7 +28,7 @@ public class LeaveRequestsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<LeaveRequestListDto>>> Get(bool isLoggedInUser = false)
     {
-        List<LeaveRequestListDto> leaveRequests = await _mediator.Send(new GetLeaveRequestListQuery());
+        var leaveRequests = await _mediator.Send(new GetLeaveRequestListQuery());
         return Ok(leaveRequests);
     }
 
@@ -96,7 +96,7 @@ public class LeaveRequestsController : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult> Delete(int id)
     {
-        DeleteLeaveRequestCommand command = new() { Id = id };
+        DeleteLeaveRequestCommand command = new DeleteLeaveRequestCommand { Id = id };
         await _mediator.Send(command);
         return NoContent();
     }

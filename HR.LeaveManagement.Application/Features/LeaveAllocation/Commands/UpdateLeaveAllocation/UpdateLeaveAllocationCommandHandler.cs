@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR.LeaveManagement.Application.Contracts.Logging;
 using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Exceptions;
 using MediatR;
@@ -10,6 +11,7 @@ public class UpdateLeaveAllocationCommandHandler : IRequestHandler<UpdateLeaveAl
     private readonly IMapper _mapper;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly ILeaveAllocationRepository _leaveAllocationRepository;
+    private readonly IAppLogger<UpdateLeaveAllocationCommandHandler> _logger;
 
     public UpdateLeaveAllocationCommandHandler(IMapper mapper, ILeaveTypeRepository leaveTypeRepository, ILeaveAllocationRepository leaveAllocationRepository)
     {
@@ -20,20 +22,11 @@ public class UpdateLeaveAllocationCommandHandler : IRequestHandler<UpdateLeaveAl
     }
     public async Task<Unit> Handle(UpdateLeaveAllocationCommand request, CancellationToken cancellationToken)
     {
-        // Validate incoming data
-        UpdateLeaveAllocationCommandValidator validator = new UpdateLeaveAllocationCommandValidator(_leaveTypeRepository, _leaveAllocationRepository);
-        FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
-
-        if (validationResult.Errors.Any())
-        {
-            //todo : use logger
-            throw new BadRequestException("Invalid Leave Allocation", validationResult);
-        }
 
         // convert to domain entity object
         Domain.Entities.LeaveAllocation? leaveAllocation = await _leaveAllocationRepository.GetByIdAsync(request.Id);
 
-
+        // check if leave allocation is null
         if (leaveAllocation is null)
             throw new NotFoundException(nameof(LeaveAllocation), request.Id);
 
@@ -44,8 +37,6 @@ public class UpdateLeaveAllocationCommandHandler : IRequestHandler<UpdateLeaveAl
         // add to database
         await _leaveAllocationRepository.UpdateAsync(leaveAllocation);
 
-
-        // return Unit value
         return Unit.Value;
     }
 

@@ -1,6 +1,6 @@
 ﻿@page "/leaverequests/employeeindex"
 
-<h1>Leave Request Log</h1>
+<h1>Leave Requests</h1>
 <hr />
 @if (string.IsNullOrEmpty(Message) == false)
 {
@@ -8,6 +8,9 @@
         @Message
     </div>
 }
+<div class="m-2 d-flex justify-content-end">
+    <a href="/leaverequests/create" class="btn btn-success">Add Leave Request</a>
+</div>
 <table id="tblData" class="table">
     <thead>
         <tr>
@@ -72,7 +75,7 @@
                     }
                 </td>
                 <td>
-                    @if (!item.Cancelled /*&& item.StartDate > DateTime.Now*/) //TODO:CHECK LOGIC
+                    @if (!item.Cancelled /*&& item.StartDate > DateTime.Now*/) //todo:make this logically correct
                     {
                         <button @onclick="@(() => CancelRequestAsync(item.Id))" class="btn btn-danger">
                             <i class="fa fa-file"></i>Cancel Request

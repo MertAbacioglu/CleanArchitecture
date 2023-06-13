@@ -25,10 +25,10 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
     public UpdateLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository, ILeaveTypeRepository leaveTypeRepository, IMapper mapper, IEmailSender emailSender, IAppLogger<UpdateLeaveRequestCommandHandler> logger, ILeaveAllocationRepository leaveAllocationRepository)
     {
         _leaveRequestRepository = leaveRequestRepository;
-        this._leaveTypeRepository = leaveTypeRepository;
-        this._mapper = mapper;
-        this._emailSender = emailSender;
-        this._logger = logger;
+        _leaveTypeRepository = leaveTypeRepository;
+        _mapper = mapper;
+        _emailSender = emailSender;
+        _logger = logger;
         _leaveAllocationRepository = leaveAllocationRepository;
     }
 

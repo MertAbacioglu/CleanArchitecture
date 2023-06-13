@@ -3,7 +3,7 @@
 
 <h3>Leave Types</h3>
 <div class="m-2 d-flex justify-content-end">
-    <button onclick="CreateLeaveType" class="btn btn-success">Add Leave Type</button>
+    <button @onclick="CreateLeaveType" class="btn btn-success">Add Leave Type</button>
 </div>
 
 @if (string.IsNullOrEmpty(Message) == false)

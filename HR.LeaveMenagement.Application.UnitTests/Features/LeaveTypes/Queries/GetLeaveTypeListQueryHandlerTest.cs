@@ -32,8 +32,9 @@ public class GetLeaveTypeListQueryHandlerTest
     public async Task GetLeaveTypeListTest()
     {
         GetLeaveTypesQueryHandler handler = new GetLeaveTypesQueryHandler(_mapper, _mockRepo.Object, _mockAppLogger.Object);
-        List<LeaveTypeDto> result = await handler.Handle(new GetLeaveTypesQuery(), CancellationToken.None);
-        result.ShouldBeOfType<List<LeaveTypeDto>>();
+        //List<LeaveTypeDto> result = await handler.Handle(new GetLeaveTypesQuery(), CancellationToken.None);
+        List<LeaveTypeDto> result = null;
+       result.ShouldBeOfType<List<LeaveTypeDto>>();
         result.Count.ShouldBe(3);
         result[0].Name.ShouldBe("Test Vacation");
     }

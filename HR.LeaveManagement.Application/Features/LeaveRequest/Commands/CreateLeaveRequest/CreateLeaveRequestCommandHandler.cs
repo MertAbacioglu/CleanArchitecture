@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
 using HR.LeaveManagement.Application.Contracts.Email;
 using HR.LeaveManagement.Application.Contracts.Identity;
 using HR.LeaveManagement.Application.Contracts.Persistence;
@@ -7,6 +8,7 @@ using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CreateLeaveR
 using HR.LeaveManagement.Application.Features.LeaveRequests.Requests.Commands;
 using HR.LeaveManagement.Application.Models.Email;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequests.Handlers.Commands;
 
@@ -35,9 +37,6 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         CreateLeaveRequestCommandValidator validator = new CreateLeaveRequestCommandValidator(_leaveTypeRepository);
         FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
 
-        if (validationResult.Errors.Any())
-            throw new BadRequestException("Invalid Leave Request", validationResult);
-
         // Get requesting employee's id
         string employeeId = _userService.UserId;
 
@@ -47,25 +46,26 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         // if allocations aren't enough, return validation error with message
         if (allocation is null)
         {
-            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(nameof(request.LeaveTypeId), $"You don't have any allocations for this leave type"));
-            throw new BadRequestException("Invalid Leave Request", validationResult);
+            validationResult.Errors.Add(new ValidationFailure(nameof(request.LeaveTypeId), $"You don't have any allocations for this leave type"));
+            throw new FluentValidation.ValidationException("Invalid Leave Request");
         }
 
         int daysRequested = (int)(request.EndDate - request.StartDate).TotalDays;
+
         if (daysRequested > allocation.NumberOfDays)
         {
-            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(nameof(request.EndDate), "You do not have enough days for this request"));
-            throw new BadRequestException("Invalid Leave Request", validationResult);
-            //todo : make this exceptions custom by the exception type
+            validationResult.Errors.Add(new ValidationFailure(nameof(request.EndDate), "You do not have enough days for this request"));
+            throw new FluentValidation.ValidationException("Invalid Leave Request");
         }
 
         // Create leave request
         Domain.Entities.LeaveRequest leaveRequest = _mapper.Map<Domain.Entities.LeaveRequest>(request);
+        leaveRequest.RequestingEmployeeId = employeeId;
         leaveRequest.DateRequested = DateTime.Now;
         await _leaveRequestRepository.CreateAsync(leaveRequest);
 
         // send confirmation email
-
+        //todo : make this method
         try
         {
             EmailMessage email = new EmailMessage

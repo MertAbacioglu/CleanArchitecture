@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using HR.LeaveManagement.BlazorUI.Models;
 using HR.LeaveManagement.BlazorUI.Contracts.Base;
+using HR.LeaveManagement.BlazorUI.Services.Base;
 
 namespace HR.LeaveManagement.BlazorUI.Pages;
 
@@ -24,13 +25,17 @@ public partial class Register
 
     protected async Task HandleRegister()
     {
-        var result = await AuthenticationService.RegisterAsync(Model.FirstName, Model.LastName, Model.UserName, Model.Email, Model.Password);
+        Response<RegistrationResponse> result = await AuthenticationService.RegisterAsync(Model);
 
-        if (result)
+        if (result.Success)
         {
             NavigationManager.NavigateTo("/");
         }
-        Message = "Something went wrong, please try again.";
+        else
+        {
+            result.ValidationErrors.ForEach(x => Message += $"{x}\n");
+        }
+        
         //todo : fluent validation or etc...
     }
 }

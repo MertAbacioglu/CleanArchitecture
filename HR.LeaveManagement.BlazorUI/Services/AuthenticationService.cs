@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using HR.LeaveManagement.BlazorUI.Contracts.Base;
+using HR.LeaveManagement.BlazorUI.Models;
 using HR.LeaveManagement.BlazorUI.Providers;
 using HR.LeaveManagement.BlazorUI.Services.Base;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -48,23 +49,41 @@ public class AuthenticationService : BaseHttpService,IAuthenticationService
 
     }
 
-    public async Task<bool> RegisterAsync(string firstName, string lastName, string userName, string email, string password)
+    public async Task<Response<RegistrationResponse>> RegisterAsync(RegisterVM registerVM)
     {
         RegistrationRequest registrationRequest = new()
         {
-            Email = email,
-            FirstName = firstName,
-            LastName = lastName,
-            Password = password,
-            UserName = userName
+            Email = registerVM.Email,
+            FirstName = registerVM.FirstName,
+            LastName = registerVM.LastName,
+            Password = registerVM.Password,
+            UserName = registerVM.UserName
         };
 
-        RegistrationResponse response = await _client.RegisterAsync(registrationRequest);
-
-        if (!string.IsNullOrEmpty(response.UserId))
+        try
         {
-            return true;
+            RegistrationResponse response = await _client.RegisterAsync(registrationRequest);
+            if (response.HasError)
+            {
+                return new Response<RegistrationResponse>() { Success = false, ValidationErrors = response.Errors.ToList() };
+            }
+            return new Response<RegistrationResponse>() { Success=true };
         }
-        return false;
+        catch (ApiException ex)
+        {
+
+            return ConvertApiExceptions<RegistrationResponse>(ex);
+        }
+
+
+
+
+        
+
+        //if (!string.IsNullOrEmpty(response.UserId))
+        //{
+        //    return true;
+        //}
+
     }
 }

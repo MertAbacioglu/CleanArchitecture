@@ -20,7 +20,6 @@ public class DeleteLeaveTypeCommandHandler : IRequestHandler<DeleteLeaveTypeComm
     {
         Domain.Entities.LeaveType leaveTypeToDelete = await _leaveTypeRepository.GetByIdAsync(request.Id);
 
-        //todo: consider adding notfoundfilter instead of this
         if (leaveTypeToDelete == null)
             throw new NotFoundException(nameof(Domain.Entities.LeaveType), request.Id);
 

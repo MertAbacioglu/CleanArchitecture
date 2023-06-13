@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HR.LeaveManagement.Identity.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialIdentityMig : Migration
+    public partial class mtIdMig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -174,8 +174,8 @@ namespace HR.LeaveManagement.Identity.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "0efdffe7-829c-4725-ab69-72c66a0673d3", "admin@localhost.com", true, "System", "Admin", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAENwuGmPyHeercVFP+MRW3h2GVC4qkpOlzdHzvbAr5lJwfvpOyYZuHFvoggYId7M2Fg==", null, false, "57f0f148-898e-4473-a219-a4abe1778d76", false, "admin@localhost.com" },
-                    { "9e224968-33e4-4652-b7b7-8574d048cdb9", 0, "83adcbae-657c-4b51-9b89-5d34b049b881", "user@localhost.com", true, "System", "User", false, null, "USER@LOCALHOST.COM", "USER@LOCALHOST.COM", "AQAAAAIAAYagAAAAELRCwPjUXiFAXN9o2uNmdiSu5C18OHxF2D5pDJHuEzQsSTowhG9NxWyQJLX/sVsNlg==", null, false, "bf64938d-9191-439d-977e-77b1fe79ddc6", false, "user@localhost.com" }
+                    { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "66d18eb2-7dc6-4f4c-b46a-78b4493867f5", "admin@localhost.com", true, "System", "Admin", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEF8sQ4cSJvBCgdImaCl8mt74MjVDalsja1IgVXWCcLzbGn/yh08ZjE4SBMqyZThtLQ==", null, false, "89beb30c-eac7-4f43-93a3-840032dd0963", false, "admin@localhost.com" },
+                    { "9e224968-33e4-4652-b7b7-8574d048cdb9", 0, "ddf72ca7-885f-4a22-90ef-fd7f77830640", "user@localhost.com", true, "System", "User", false, null, "USER@LOCALHOST.COM", "USER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEP77WcuYBBWv3gVcNYRrZuATLhNIODvTahEhVvqdViv56ixYo6X81yQWY4Fzs52+Ew==", null, false, "13112e5e-7cb5-424e-a41a-f3dbf59fcbb9", false, "user@localhost.com" }
                 });
 
             migrationBuilder.InsertData(

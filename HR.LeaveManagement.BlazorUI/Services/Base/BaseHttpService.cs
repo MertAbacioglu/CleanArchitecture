@@ -12,34 +12,35 @@ public class BaseHttpService
         _client = client;
         _localStorageService = localStorageService;
     }
-
     protected Response<Guid> ConvertApiExceptions<Guid>(ApiException ex)
-    // todo : use differedent type instead of Guid
     {
-        Console.WriteLine("ConvertApiExceptions method called"); // add this line
+        Console.WriteLine("ConvertApiExceptions method called");
 
-        if (ex.StatusCode == 400)
+        switch (ex.StatusCode)
         {
-            Console.WriteLine("400 error: Invalid data was submitted"); // add this line
-            return new Response<Guid>() { Message = "Invalid data was submitted", ValidationErrors = ex.Response, Success = false };
-        }
-        else if (ex.StatusCode == 404)
-        {
-            Console.WriteLine("404 error: The record was not found."); // add this line
-            return new Response<Guid>() { Message = "The record was not found.", Success = false };
-        }
-        else
-        {
-            Console.WriteLine("Unknown error occurred"); // add this line
-            return new Response<Guid>() { Message = "Something went wrong, please try again later.", Success = false };
+            case 400:
+                Console.WriteLine("400 error: Invalid data was submitted");
+                return new Response<Guid>() { Message = "Invalid data was submitted", ValidationError = ex.Response, Success = false };
+            case 401:
+                Console.WriteLine("401 error: Unauthorized access");
+                return new Response<Guid>() { Message = "Unauthorized access", Success = false };
+            case 403:
+                Console.WriteLine("403 error: Forbidden access");
+                return new Response<Guid>() { Message = "Forbidden access", Success = false };
+            case 404:
+                Console.WriteLine("404 error: The record was not found");
+                return new Response<Guid>() { Message = "The record was not found", Success = false };
+            case 409:
+                Console.WriteLine("409 error: Conflict occurred");
+                return new Response<Guid>() { Message = "Conflict occurred", Success = false };
+            case 500:
+                Console.WriteLine("500 error: Internal server error");
+                return new Response<Guid>() { Message = "Internal server error", Success = false };
+            default:
+                Console.WriteLine("Unknown error occurred");
+                return new Response<Guid>() { Message = "Something went wrong, please try again later.", Success = false };
         }
     }
 
-    //protected async Task AddBearerToken()
-    //{
-    //    if (await _localStorageService.ContainKeyAsync("token"))
-    //    {
-    //        _client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _localStorageService.GetItemAsync<string>("token"));
-    //    }
-    //}
+
 }
