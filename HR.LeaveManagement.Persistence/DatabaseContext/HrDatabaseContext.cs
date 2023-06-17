@@ -11,7 +11,6 @@ public class HrDatabaseContext : DbContext
     private readonly IUserService _userService;
     public HrDatabaseContext(DbContextOptions<HrDatabaseContext> options, IUserService userService) : base(options)
     {
-        Database.EnsureCreated();
         _userService = userService;
     }
 

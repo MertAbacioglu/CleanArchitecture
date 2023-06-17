@@ -9,16 +9,11 @@ public class HrLeaveManagementIdentityDbContext : IdentityDbContext<ApplicationU
 {
     public HrLeaveManagementIdentityDbContext(DbContextOptions<HrLeaveManagementIdentityDbContext> options) : base(options)
     {
-        Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Ignore<IdentityUserLogin<string>>();
-        builder.Ignore<IdentityUserClaim<string>>();
-        builder.Ignore<IdentityUserToken<string>>();
-        builder.Ignore<IdentityRoleClaim<string>>();
         builder.ApplyConfigurationsFromAssembly(typeof(HrLeaveManagementIdentityDbContext).Assembly);
     }
 }
