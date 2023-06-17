@@ -4,6 +4,7 @@ using HR.LeaveManagement.Identity.DbContext;
 using HR.LeaveManagement.Identity.Models;
 using HR.LeaveManagement.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -58,6 +59,8 @@ public static class IdentityServiceRegistration
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSetting:Key"]))
             };
         });
+
+
 
         //todo : oto navigate if someone is not authenticated
         return services;

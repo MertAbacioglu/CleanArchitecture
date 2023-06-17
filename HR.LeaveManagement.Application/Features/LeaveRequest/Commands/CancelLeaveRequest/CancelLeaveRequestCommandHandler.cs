@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using HR.LeaveManagement.Application.Contracts.Email;
+﻿using HR.LeaveManagement.Application.Contracts.Email;
 using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Exceptions;
-using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.UpdateLeaveRequest;
 using HR.LeaveManagement.Application.Models.Email;
 using MediatR;
 
@@ -12,15 +10,15 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CancelLe
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _leaveAllocationRepository;
-        private readonly IEmailSender _emailSender;
+        private readonly IEMailService _eMailService;
 
         public CancelLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository,
         ILeaveAllocationRepository leaveAllocationRepository,
-        IEmailSender emailSender)
+        IEMailService eMailService)
         {
             _leaveRequestRepository = leaveRequestRepository;
-            this._leaveAllocationRepository = leaveAllocationRepository;
-            this._emailSender = emailSender;
+            _leaveAllocationRepository = leaveAllocationRepository;
+            _eMailService = eMailService;
         }
 
         public async Task<Unit> Handle(CancelLeaveRequestCommand request, CancellationToken cancellationToken)
@@ -55,7 +53,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CancelLe
                     Subject = "Leave Request Cancelled"
                 };
 
-                await _emailSender.SendEmail(email);
+                await _eMailService.SendEmail(email);
             }
             catch (Exception)
             {

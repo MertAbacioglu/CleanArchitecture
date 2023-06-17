@@ -2,7 +2,6 @@
 using HR.LeaveManagement.Application.Contracts.Logging;
 using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Features.LeaveType.Queries.GetAllLeaveTypes;
-using HR.LeaveManagement.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
 using HR.LeaveManagement.Application.MappingProfiles;
 using HR.LeaveMenagement.Application.UnitTests.Mocks;
 using Moq;
@@ -20,7 +19,8 @@ public class GetLeaveTypeListQueryHandlerTest
     {
         _mockRepo = MockLeaveRepository.GetLeaveTypeMockLeaveTypeRepository();
 
-        MapperConfiguration mapperConfig = new MapperConfiguration(c => {
+        MapperConfiguration mapperConfig = new MapperConfiguration(c =>
+        {
             c.AddProfile<LeaveTypeProfile>();
         });
 
@@ -34,7 +34,7 @@ public class GetLeaveTypeListQueryHandlerTest
         GetLeaveTypesQueryHandler handler = new GetLeaveTypesQueryHandler(_mapper, _mockRepo.Object, _mockAppLogger.Object);
         //List<LeaveTypeDto> result = await handler.Handle(new GetLeaveTypesQuery(), CancellationToken.None);
         List<LeaveTypeDto> result = null;
-       result.ShouldBeOfType<List<LeaveTypeDto>>();
+        result.ShouldBeOfType<List<LeaveTypeDto>>();
         result.Count.ShouldBe(3);
         result[0].Name.ShouldBe("Test Vacation");
     }

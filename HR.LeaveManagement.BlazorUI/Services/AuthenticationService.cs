@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace HR.LeaveManagement.BlazorUI.Services;
 
-public class AuthenticationService : BaseHttpService,IAuthenticationService
+public class AuthenticationService : BaseHttpService, IAuthenticationService
 {
     private readonly AuthenticationStateProvider _authenticationStateProvider;
     public AuthenticationService(IClient client, ILocalStorageService localStorageService, AuthenticationStateProvider authenticationStateProvider) : base(client, localStorageService)
@@ -67,7 +67,7 @@ public class AuthenticationService : BaseHttpService,IAuthenticationService
             {
                 return new Response<RegistrationResponse>() { Success = false, ValidationErrors = response.Errors.ToList() };
             }
-            return new Response<RegistrationResponse>() { Success=true };
+            return new Response<RegistrationResponse>() { Success = true };
         }
         catch (ApiException ex)
         {
@@ -78,7 +78,7 @@ public class AuthenticationService : BaseHttpService,IAuthenticationService
 
 
 
-        
+
 
         //if (!string.IsNullOrEmpty(response.UserId))
         //{

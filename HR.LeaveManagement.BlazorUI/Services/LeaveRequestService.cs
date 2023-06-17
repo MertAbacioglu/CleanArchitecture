@@ -36,7 +36,7 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
     {
         try
         {
-            Response<Guid> response = new();
+            Response<Guid> response = new() { Success = true };
             CancelLeaveRequestCommand request = new() { Id = id };
             await _client.CancelRequestAsync(request);
             return response;
@@ -93,7 +93,6 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
 
     public async Task<EmployeeLeaveRequestViewVM> GetUserLeaveRequests()
     {
-        //await AddBearerToken();
         ICollection<LeaveRequestListDto> leaveRequests = await _client.LeaveRequestsAllAsync(isLoggedInUser: true);
         ICollection<LeaveAllocationDto> allocations = await _client.LeaveAllocationsAllAsync(isLoggedInUser: true);
         EmployeeLeaveRequestViewVM model = new()

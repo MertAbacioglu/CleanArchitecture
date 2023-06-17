@@ -31,29 +31,22 @@ public class GetLeaveRequestListQueryHandler : IRequestHandler<GetLeaveRequestLi
         //check if user is logged in
         if (request.IsLoggedInUser)
         {
-            string userId =_userService.UserId;
+            string userId = _userService.UserId;
             leaveRequests = await _leaveRequestRepository.GetLeaveRequestsWithDetails(userId);
             Models.Identity.Employee employee = await _userService.GetEmployee(userId);
             requests = _mapper.Map<List<LeaveRequestListDto>>(leaveRequests);
             foreach (LeaveRequestListDto requestDto in requests)
-            {
                 requestDto.Employee = employee;
-            }
+            
             return requests;
         }
         else
         {
             leaveRequests = await _leaveRequestRepository.GetLeaveRequestsWithDetails();
             requests = _mapper.Map<List<LeaveRequestListDto>>(leaveRequests);
-            foreach (LeaveRequestListDto requestDto in requests)
-            {
-                requestDto.Employee = await _userService.GetEmployee(requestDto.RequestingEmployeeId);
-            }
+            foreach (LeaveRequestListDto requestDto in requests)requestDto.Employee = await _userService.GetEmployee(requestDto.RequestingEmployeeId);           
         }
 
         return requests;
     }
 }
-
-
-

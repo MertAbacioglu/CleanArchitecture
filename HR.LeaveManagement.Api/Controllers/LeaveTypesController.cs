@@ -1,12 +1,11 @@
-﻿using HR.LeaveManagement.Application.Features.LeaveType.Command.DeleteLeaveType;
+﻿    using HR.LeaveManagement.Api.Models;
+using HR.LeaveManagement.Application.Features.LeaveType.Command.DeleteLeaveType;
 using HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeaveType;
 using HR.LeaveManagement.Application.Features.LeaveType.Queries.GetAllLeaveTypes;
 using HR.LeaveManagement.Application.Features.LeaveType.Queries.GetLeaveTypeDetails;
 using HR.LeaveManagement.Application.Features.LeaveTypes.Commands.CreateLeaveType;
 using HR.LeaveManagement.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
-using HR.LeaveManagement.Application.Wrappers;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -26,9 +25,9 @@ public class LeaveTypesController : ControllerBase
 
     // GET: api/<LeaveTypesController>
     [HttpGet]
-    public async Task<ActionResult<Result<List<LeaveTypeDto>>>> Get()
+    public async Task<ActionResult<List<LeaveTypeDto>>> Get()
     {
-        Result<List<LeaveTypeDto>> leaveTypes = await _mediator.Send(new GetLeaveTypesQuery());
+        List<LeaveTypeDto> leaveTypes = await _mediator.Send(new GetLeaveTypesQuery());
         return Ok(leaveTypes);
     }
 
@@ -43,8 +42,8 @@ public class LeaveTypesController : ControllerBase
     // POST api/<LeaveTypesController>
     [HttpPost]
     [ProducesResponseType(201)]
-    [ProducesResponseType(400)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Post(CreateLeaveTypeCommand leaveType)
     {
         int response = await _mediator.Send(leaveType);
@@ -54,10 +53,9 @@ public class LeaveTypesController : ControllerBase
     // PUT api/<LeaveTypesController>
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(400)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
-    public async Task<ActionResult> Put(UpdateLeaveTypeCommand leaveType)
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Put(UpdateLeaveTypeCommand leaveType)
     {
         await _mediator.Send(leaveType);
         return NoContent();
@@ -66,13 +64,11 @@ public class LeaveTypesController : ControllerBase
     // DELETE api/<LeaveTypesController>/5
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
-    public async Task<ActionResult> Delete(int id)
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(int id)
     {
         DeleteLeaveTypeCommand command = new DeleteLeaveTypeCommand { Id = id };
         await _mediator.Send(command);
         return NoContent();
     }
 }
-

@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 
 namespace HR.LeaveManagement.Application.Exceptions;
 

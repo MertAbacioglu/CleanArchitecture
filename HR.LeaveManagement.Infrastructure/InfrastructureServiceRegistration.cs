@@ -13,7 +13,7 @@ public static class InfrastructureServiceRegistration
     {
         services.Configure<EmailSetting>(configuration.GetSection("EmailSetting"));
 
-        services.AddTransient<IEmailSender, EmailSender>();
+        services.AddTransient<IEMailService, EMailService>();
 
         return services;
     }

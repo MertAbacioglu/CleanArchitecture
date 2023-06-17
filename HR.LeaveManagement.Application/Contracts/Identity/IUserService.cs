@@ -7,4 +7,5 @@ public interface IUserService
     Task<Employee> GetEmployee(string id);
     Task<List<Employee>> GetEmployees();
     public string UserId { get; }
+    public string UserEmail { get; }
 }

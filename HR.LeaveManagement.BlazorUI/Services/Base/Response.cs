@@ -1,6 +1,6 @@
 ﻿namespace HR.LeaveManagement.BlazorUI.Services.Base;
 
-public class Response<T> 
+public class Response<T>
 {
     public bool Success { get; set; }
     public T Data { get; set; }

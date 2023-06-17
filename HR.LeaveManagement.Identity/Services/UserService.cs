@@ -21,6 +21,7 @@ public class UserService : IUserService
     }
 
     public string UserId { get => _httpContextAccessor.HttpContext?.User.FindFirstValue("uid"); }
+    public string UserEmail { get => _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Email); }
 
     public async Task<Employee> GetEmployee(string id)
     {

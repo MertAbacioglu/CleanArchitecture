@@ -9,7 +9,7 @@ namespace HR.LeaveManagement.BlazorUI.Extensions
             IEnumerable<Type> serviceImplementations = assembly.GetTypes()
                 .Where(type => type.IsClass && !type.IsAbstract && type.Name.EndsWith("Service"));
 
-            foreach (var implementationType in serviceImplementations)
+            foreach (Type implementationType in serviceImplementations)
             {
                 Type? interfaceType = implementationType.GetInterfaces()
                     .FirstOrDefault(i => i.Name == $"I{implementationType.Name}");

@@ -3,28 +3,26 @@ using FluentValidation.Results;
 using HR.LeaveManagement.Application.Contracts.Email;
 using HR.LeaveManagement.Application.Contracts.Identity;
 using HR.LeaveManagement.Application.Contracts.Persistence;
-using HR.LeaveManagement.Application.Exceptions;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CreateLeaveRequest;
 using HR.LeaveManagement.Application.Features.LeaveRequests.Requests.Commands;
 using HR.LeaveManagement.Application.Models.Email;
 using MediatR;
-using System.ComponentModel.DataAnnotations;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequests.Handlers.Commands;
 
 public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, Unit>
 {
-    private readonly IEmailSender _emailSender;
+    private readonly IEMailService _eMailService;
     private readonly IMapper _mapper;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly ILeaveRequestRepository _leaveRequestRepository;
     private readonly ILeaveAllocationRepository _leaveAllocationRepository;
     private readonly IUserService _userService;
 
-    public CreateLeaveRequestCommandHandler(IEmailSender emailSender,
+    public CreateLeaveRequestCommandHandler(IEMailService eMailService,
         IMapper mapper, ILeaveTypeRepository leaveTypeRepository, ILeaveRequestRepository leaveRequestRepository, ILeaveAllocationRepository leaveAllocationRepository, IUserService userService)
     {
-        _emailSender = emailSender;
+        _eMailService = eMailService;
         _mapper = mapper;
         _leaveTypeRepository = leaveTypeRepository;
         _leaveRequestRepository = leaveRequestRepository;
@@ -41,7 +39,7 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         string employeeId = _userService.UserId;
 
         // Check on employee's allocation
-        Domain.Entities.LeaveAllocation allocation =await _leaveAllocationRepository.GetUserAllocations(employeeId, request.LeaveTypeId);
+        Domain.Entities.LeaveAllocation allocation = await _leaveAllocationRepository.GetUserAllocations(employeeId, request.LeaveTypeId);
 
         // if allocations aren't enough, return validation error with message
         if (allocation is null)
@@ -76,17 +74,17 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
                 Subject = "Leave Request Submitted"
             };
 
-        await _emailSender.SendEmail(email);
+            await _eMailService.SendEmail(email);
 
         }
         catch (Exception ex)
         {
             //log or handle error
             Console.WriteLine(ex.Message);
-            
+
         }
 
-       
+
 
         return Unit.Value;
     }

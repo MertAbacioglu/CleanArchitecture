@@ -35,7 +35,7 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
         }
 
         List<Claim> claims = await GetClaims();
-        user = new (new ClaimsIdentity(claims, "jwt"));
+        user = new(new ClaimsIdentity(claims, "jwt"));
         return new AuthenticationState(user);
     }
 

@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using HR.LeaveManagement.Application.Contracts.Logging;
 using HR.LeaveManagement.Application.Contracts.Persistence;
-using HR.LeaveManagement.Application.Exceptions;
 using MediatR;
 
 namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeaveType;

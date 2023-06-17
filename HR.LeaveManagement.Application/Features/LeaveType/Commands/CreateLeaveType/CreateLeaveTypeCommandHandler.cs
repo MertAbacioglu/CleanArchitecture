@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using HR.LeaveManagement.Application.Contracts.Persistence;
-using HR.LeaveManagement.Application.Exceptions;
-using HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeaveType;
 using MediatR;
 
 namespace HR.LeaveManagement.Application.Features.LeaveTypes.Commands.CreateLeaveType;

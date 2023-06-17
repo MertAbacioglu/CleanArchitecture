@@ -1,8 +1,8 @@
-using HR.LeaveManagement.Application;
-using HR.LeaveManagement.Persistence;
-using HR.LeaveManagement.Infrastructure;
 using HR.LeaveManagement.Api.Middleware;
+using HR.LeaveManagement.Application;
 using HR.LeaveManagement.Identity;
+using HR.LeaveManagement.Infrastructure;
+using HR.LeaveManagement.Persistence;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -12,7 +12,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
-builder.Host.UseSerilog((context,loggerConfig)=>loggerConfig
+builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
 .WriteTo.Console()
 .ReadFrom.Configuration(context.Configuration)
 );

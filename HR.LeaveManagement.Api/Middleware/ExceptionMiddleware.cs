@@ -1,10 +1,7 @@
-﻿using FluentValidation;
-using HR.LeaveManagement.Api.Models;
+﻿using HR.LeaveManagement.Api.Models;
 using HR.LeaveManagement.Application.Exceptions;
-using HR.LeaveManagement.Application.Wrappers;
-using Newtonsoft.Json;
 using System.Net;
-using System.Text;
+using System.Text.Json;
 
 namespace HR.LeaveManagement.Api.Middleware
 {
@@ -90,7 +87,9 @@ namespace HR.LeaveManagement.Api.Middleware
 
             // Set the response status code and log the problem
             httpContext.Response.StatusCode = (int)statusCode;
-            string logMessage = JsonConvert.SerializeObject(problem);
+            string logMessage = JsonSerializer.Serialize(problem);
+
+
             _logger.LogWarning(logMessage);
 
             // Handle response based on the exception type

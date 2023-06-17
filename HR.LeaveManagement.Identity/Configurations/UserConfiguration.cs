@@ -21,7 +21,7 @@ public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
                  LastName = "Admin",
                  UserName = "admin@localhost.com",
                  NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                 PasswordHash = hasher.HashPassword(null, "P@ssword1"),
+                 PasswordHash = hasher.HashPassword(null, "12345Aa!"),
                  EmailConfirmed = true
              },
              new ApplicationUser
@@ -33,7 +33,7 @@ public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
                  LastName = "User",
                  UserName = "user@localhost.com",
                  NormalizedUserName = "USER@LOCALHOST.COM",
-                 PasswordHash = hasher.HashPassword(null, "P@ssword1"),
+                 PasswordHash = hasher.HashPassword(null, "12345Aa!"),
                  EmailConfirmed = true
              }
         );

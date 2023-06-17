@@ -19,7 +19,7 @@
         <label for="leaveType">Leave Type</label>
         <InputSelect class="form-control" id="leaveType" @bind-Value="LeaveRequest.LeaveTypeId">
             <option>Select Leave Type</option>
-            @foreach (var leaveType in leaveTypeVMs)
+            @foreach (LeaveTypeVM leaveType in leaveTypeVMs)
             {
                 <option value="@leaveType.Id">@leaveType.Name</option>
             }

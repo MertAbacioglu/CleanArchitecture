@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
 using HR.LeaveManagement.Application.Contracts.Persistence;
-using AutoMapper;
+using MediatR;
 
 namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Queries.GetLeaveAllocations;
 
@@ -15,7 +15,7 @@ public class GetLeaveAllocationListHandler : IRequestHandler<GetLeaveAllocationL
         _mapper = mapper;
     }
 
-    
+
 
     public async Task<List<LeaveAllocationDto>> Handle(GetLeaveAllocationListQuery request, CancellationToken cancellationToken)
     {

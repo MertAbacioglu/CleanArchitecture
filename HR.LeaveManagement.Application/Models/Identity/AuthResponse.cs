@@ -6,4 +6,7 @@ public class AuthResponse
     public string Token { get; set; }
     public string UserName { get; set; }
     public string Email { get; set; }
+    public bool HasError { get; set; }
+    public List<string> Errors { get; set; } = new List<string>();
+
 }

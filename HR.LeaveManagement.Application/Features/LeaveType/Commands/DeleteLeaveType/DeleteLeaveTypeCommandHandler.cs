@@ -7,12 +7,12 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Command.DeleteLeaveT
 
 public class DeleteLeaveTypeCommandHandler : IRequestHandler<DeleteLeaveTypeCommand, Unit>
 {
-    
+
     private readonly ILeaveTypeRepository _leaveTypeRepository;
 
     public DeleteLeaveTypeCommandHandler(ILeaveTypeRepository leaveTypeRepository)
     {
-        
+
         this._leaveTypeRepository = leaveTypeRepository;
     }
 

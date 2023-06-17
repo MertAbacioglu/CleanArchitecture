@@ -1,3 +1,4 @@
+using Blazored.Toast.Services;
 using HR.LeaveManagement.BlazorUI.Contracts.Base;
 using HR.LeaveManagement.BlazorUI.Models.LeaveTypes;
 using HR.LeaveManagement.BlazorUI.Services.Base;
@@ -11,6 +12,8 @@ public partial class Edit
     public ILeaveTypeService LeaveTypeService { get; set; }
     [Inject]
     public NavigationManager NavigationManager { get; set; }
+    [Inject]
+    public IToastService ToastService { get; set; }
     public LeaveTypeVM LeaveType { get; set; } = new();
 
     [Parameter]
@@ -27,6 +30,8 @@ public partial class Edit
         Response<Guid> response = await LeaveTypeService.UpdateLeaveType(Id, LeaveType);
         if (response.Success)
         {
+            ToastService.ShowSuccess("Allocation updated");
+
             NavigationManager.NavigateTo("/leavetypes/");
         }
         Message = response.Message;

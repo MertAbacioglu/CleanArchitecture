@@ -1,6 +1,5 @@
 ﻿
 using HR.LeaveManagement.Application.Contracts.Persistence;
-using HR.LeaveManagement.Domain;
 using HR.LeaveManagement.Domain.Entities;
 using HR.LeaveManagement.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +20,8 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
 
     public async Task<bool> AllocationExists(string userId, int leaveTypeId, int period)
     {
-       return await _context.LeaveAllocations.AnyAsync(q => q.EmployeeId == userId 
-       && q.LeaveTypeId == leaveTypeId && q.Period == period);
+        return await _context.LeaveAllocations.AnyAsync(q => q.EmployeeId == userId
+        && q.LeaveTypeId == leaveTypeId && q.Period == period);
     }
 
     public async Task<List<LeaveAllocation>> GetLeaveAllocationsWithDetails()
@@ -38,8 +37,8 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
         List<LeaveAllocation> leaveAllocations = await _context.LeaveAllocations.Where(q => q.EmployeeId == userId)
             .Include(q => q.LeaveType).ToListAsync();
         return leaveAllocations;
-    } 
-    
+    }
+
     public async Task<LeaveAllocation> GetUserAllocations(string userId, int leaveTypeId)
     {
         LeaveAllocation? leaveAllocations = await _context.LeaveAllocations
@@ -57,5 +56,5 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
         return leaveAllocation;
     }
 
-   
+
 }

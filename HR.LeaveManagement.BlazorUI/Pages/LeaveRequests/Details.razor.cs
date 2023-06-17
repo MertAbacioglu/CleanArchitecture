@@ -1,6 +1,5 @@
 using HR.LeaveManagement.BlazorUI.Contracts.Base;
 using HR.LeaveManagement.BlazorUI.Models.LeaveRequests;
-using HR.LeaveManagement.BlazorUI.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace HR.LeaveManagement.BlazorUI.Pages.LeaveRequests;

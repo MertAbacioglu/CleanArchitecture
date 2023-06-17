@@ -10,7 +10,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.ChangeLe
 public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLeaveRequestApprovalCommand, Unit>
 {
     private readonly IMapper _mapper;
-    private readonly IEmailSender _emailSender;
+    private readonly IEMailService _eMailService;
     private readonly ILeaveRequestRepository _leaveRequestRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly ILeaveAllocationRepository _leaveAllocationRepository;
@@ -20,13 +20,13 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
          ILeaveTypeRepository leaveTypeRepository,
          ILeaveAllocationRepository leaveAllocationRepository,
          IMapper mapper,
-         IEmailSender emailSender)
+         IEMailService eMailService)
     {
         _leaveRequestRepository = leaveRequestRepository;
         _leaveTypeRepository = leaveTypeRepository;
         _leaveAllocationRepository = leaveAllocationRepository;
         _mapper = mapper;
-        _emailSender = emailSender;
+        _eMailService = eMailService;
     }
 
     public async Task<Unit> Handle(ChangeLeaveRequestApprovalCommand request, CancellationToken cancellationToken)
@@ -58,7 +58,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
                 Body = $"The approval status for your leave request for {leaveRequest.StartDate:D} to {leaveRequest.EndDate:D} has been updated.",
                 Subject = "Leave Request Approval Status Updated"
             };
-            await _emailSender.SendEmail(email);
+            await _eMailService.SendEmail(email);
         }
         catch (Exception)
         {

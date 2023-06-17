@@ -30,6 +30,8 @@ public class UpdateLeaveAllocationCommandHandler : IRequestHandler<UpdateLeaveAl
         if (leaveAllocation is null)
             throw new NotFoundException(nameof(LeaveAllocation), request.Id);
 
+        ArgumentNullException.ThrowIfNull(request.LeaveTypeId);
+
         // map request to leave allocation
         _mapper.Map(request, leaveAllocation); //check this
 

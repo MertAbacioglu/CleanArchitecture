@@ -10,6 +10,6 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.ChangeLe
             .NotNull()
             .WithMessage("Approval Status cannot be null");
         }
-        
+
     }
 }

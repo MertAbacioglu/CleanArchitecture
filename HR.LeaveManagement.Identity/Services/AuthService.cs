@@ -1,5 +1,4 @@
 ﻿using HR.LeaveManagement.Application.Contracts.Identity;
-using HR.LeaveManagement.Application.Exceptions;
 using HR.LeaveManagement.Application.Models.Identity;
 using HR.LeaveManagement.Domain.Enums;
 using HR.LeaveManagement.Identity.Models;
@@ -9,7 +8,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HR.LeaveManagement.Identity.Services;
 
@@ -30,14 +28,24 @@ public class AuthService : IAuthService
         ApplicationUser? user = await _userManager.FindByEmailAsync(request.Email);
         if (user == null)
         {
-            throw new NotFoundException($"User with {request.Email} not found.", request.Email);
+            //throw new NotFoundException($"User with {request.Email} not found.", request.Email);
+            return new AuthResponse()
+            {
+                Errors = { $"User with {request.Email} not found." },
+                HasError = true
+            };
         }
 
         SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (!result.Succeeded)
         {
-            throw new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
+            //throw new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
+            return new AuthResponse()
+            {
+                Errors = { $"Credentials for '{request.Email} aren't valid'." },
+                HasError = true
+            };
         }
 
         JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
@@ -111,7 +119,7 @@ public class AuthService : IAuthService
         catch (Exception ex)
         {
 
-            return new RegistrationResponse() { HasError = false, Errors ={ex.Message } };
+            return new RegistrationResponse() { HasError = false, Errors = { ex.Message } };
         }
 
     }

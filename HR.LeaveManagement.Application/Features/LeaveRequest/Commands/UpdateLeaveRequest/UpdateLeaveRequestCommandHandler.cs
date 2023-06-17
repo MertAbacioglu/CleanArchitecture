@@ -5,11 +5,6 @@ using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Exceptions;
 using HR.LeaveManagement.Application.Models.Email;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.UpdateLeaveRequest;
 
@@ -19,15 +14,15 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly ILeaveAllocationRepository _leaveAllocationRepository;
     private readonly IMapper _mapper;
-    private readonly IEmailSender _emailSender;
+    private readonly IEMailService _eMailService;
     private readonly IAppLogger<UpdateLeaveRequestCommandHandler> _logger;
 
-    public UpdateLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository, ILeaveTypeRepository leaveTypeRepository, IMapper mapper, IEmailSender emailSender, IAppLogger<UpdateLeaveRequestCommandHandler> logger, ILeaveAllocationRepository leaveAllocationRepository)
+    public UpdateLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository, ILeaveTypeRepository leaveTypeRepository, IMapper mapper, IEMailService eMailService, IAppLogger<UpdateLeaveRequestCommandHandler> logger, ILeaveAllocationRepository leaveAllocationRepository)
     {
         _leaveRequestRepository = leaveRequestRepository;
         _leaveTypeRepository = leaveTypeRepository;
         _mapper = mapper;
-        _emailSender = emailSender;
+        _eMailService = eMailService;
         _logger = logger;
         _leaveAllocationRepository = leaveAllocationRepository;
     }
@@ -48,7 +43,7 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
         if (request.Approved)
         {
             int daysRequested = (int)(request.EndDate - request.StartDate).TotalDays;
-            var allocation = await _leaveAllocationRepository.GetUserAllocations(leaveRequest.RequestingEmployeeId, leaveRequest.LeaveTypeId);
+            Domain.Entities.LeaveAllocation allocation = await _leaveAllocationRepository.GetUserAllocations(leaveRequest.RequestingEmployeeId, leaveRequest.LeaveTypeId);
             allocation.NumberOfDays -= daysRequested;
             await _leaveAllocationRepository.UpdateAsync(allocation);
 
@@ -62,7 +57,7 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
                                 $"has been updated successfully.",
                 Subject = "Leave Request Submitted"
             };
-            await _emailSender.SendEmail(email);
+            await _eMailService.SendEmail(email);
         }
         catch (Exception ex)
         {

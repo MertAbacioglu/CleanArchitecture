@@ -1,13 +1,11 @@
-﻿using HR.LeaveManagement.BlazorUI.Contracts.Base;
+﻿using Blazored.LocalStorage;
+using Blazored.Toast;
+using HR.LeaveManagement.BlazorUI.Extensions;
 using HR.LeaveManagement.BlazorUI.Handlers;
 using HR.LeaveManagement.BlazorUI.Providers;
 using HR.LeaveManagement.BlazorUI.Services.Base;
-using HR.LeaveManagement.BlazorUI.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Reflection;
-using Blazored.LocalStorage;
-using Blazored.Toast;
-using HR.LeaveManagement.BlazorUI.Extensions;
 
 namespace HR.LeaveManagement.BlazorUI
 {
@@ -25,11 +23,6 @@ namespace HR.LeaveManagement.BlazorUI
             services.AddBlazoredLocalStorage();
             services.AddBlazoredToast();
             services.AddAuthorizationCore();
-
-            //services.AddScoped<ILeaveTypeService, LeaveTypeService>();
-            //services.AddScoped<ILeaveAllocationService, LeaveAllocationService>();
-            //services.AddScoped<ILeaveRequestService, LeaveRequestService>();
-            //services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             ServiceDIExtension.AddScopedServicesEndingWith(services, Assembly.GetExecutingAssembly());
             services.AddScopedServicesEndingWith(Assembly.GetExecutingAssembly());

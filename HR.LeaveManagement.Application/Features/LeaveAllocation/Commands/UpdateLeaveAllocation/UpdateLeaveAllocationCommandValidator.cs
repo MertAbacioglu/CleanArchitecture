@@ -8,7 +8,7 @@ public class UpdateLeaveAllocationCommandValidator : AbstractValidator<UpdateLea
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly ILeaveAllocationRepository _leaveAllocationRepository;
 
-    public UpdateLeaveAllocationCommandValidator(ILeaveTypeRepository leaveTypeRepository, ILeaveAllocationRepository leaveAllocationRepository) 
+    public UpdateLeaveAllocationCommandValidator(ILeaveTypeRepository leaveTypeRepository, ILeaveAllocationRepository leaveAllocationRepository)
     {
         _leaveTypeRepository = leaveTypeRepository;
         _leaveAllocationRepository = leaveAllocationRepository;
@@ -16,7 +16,7 @@ public class UpdateLeaveAllocationCommandValidator : AbstractValidator<UpdateLea
         RuleFor(p => p.Period).GreaterThanOrEqualTo(DateTime.Now.Year).WithMessage("{PropertyName} must be after {ComparisonValue");
         RuleFor(p => p.LeaveTypeId).GreaterThan(0).MustAsync(LeaveTypeMustExist).WithMessage("{PropertyName} does not exist.");
         RuleFor(p => p.Id).MustAsync(LeaveAllocationNameUnique).WithMessage("{PropertyName} must be present");
-        
+
     }
 
     private async Task<bool> LeaveAllocationNameUnique(int id, CancellationToken arg2)

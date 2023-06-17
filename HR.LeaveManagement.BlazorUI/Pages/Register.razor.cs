@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Components;
-using HR.LeaveManagement.BlazorUI.Models;
 using HR.LeaveManagement.BlazorUI.Contracts.Base;
+using HR.LeaveManagement.BlazorUI.Models;
 using HR.LeaveManagement.BlazorUI.Services.Base;
+using Microsoft.AspNetCore.Components;
 
 namespace HR.LeaveManagement.BlazorUI.Pages;
 
@@ -35,7 +35,7 @@ public partial class Register
         {
             result.ValidationErrors.ForEach(x => Message += $"{x}\n");
         }
-        
+
         //todo : fluent validation or etc...
     }
 }

@@ -1,5 +1,5 @@
-﻿using HR.LeaveManagement.Application.Contracts.Persistence;
-using FluentValidation;
+﻿using FluentValidation;
+using HR.LeaveManagement.Application.Contracts.Persistence;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Shared
 {

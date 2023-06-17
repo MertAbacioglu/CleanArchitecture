@@ -1,24 +1,18 @@
 ﻿using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Exceptions;
-using HR.LeaveManagement.Application.Features.LeaveAllocations.Commands.DeleteLeaveAllocation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.DeleteLeaveRequest;
 
 public class DeleteLeaveRequestCommandHandler : IRequestHandler<DeleteLeaveRequestCommand>
 {
     private readonly ILeaveRequestRepository _leaveRequestRepository;
-    
+
 
     public DeleteLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository)
     {
         _leaveRequestRepository = leaveRequestRepository;
-        
+
     }
 
 
@@ -31,6 +25,6 @@ public class DeleteLeaveRequestCommandHandler : IRequestHandler<DeleteLeaveReque
             throw new NotFoundException(nameof(LeaveAllocation), request.Id);
 
         await _leaveRequestRepository.DeleteAsync(leaveRequest);
-        
+
     }
 }

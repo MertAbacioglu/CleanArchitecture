@@ -12,8 +12,6 @@
     <div class="col-md-4">
         <EditForm Model="@Model" OnValidSubmit="HandleLogin">
             <DataAnnotationsValidator />
-            <ValidationSummary />
-
             <div class="form-group">
                 <label class="control-label">Email</label>
                 <InputText id="userName" class="form-control" @bind-Value="@Model.Email"></InputText>

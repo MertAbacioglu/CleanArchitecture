@@ -1,4 +1,5 @@
-﻿using HR.LeaveManagement.Application.Features.LeaveAllocation.Queries.GetLeaveAllocations;
+﻿using HR.LeaveManagement.Api.Models;
+using HR.LeaveManagement.Application.Features.LeaveAllocation.Queries.GetLeaveAllocations;
 using HR.LeaveManagement.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 using HR.LeaveManagement.Application.Features.LeaveAllocations.Commands.DeleteLeaveAllocation;
 using HR.LeaveManagement.Application.Features.LeaveAllocations.Commands.UpdateLeaveAllocation;
@@ -40,8 +41,8 @@ public class LeaveAllocationsController : ControllerBase
     // POST api/<LeaveAllocationsController>
     [HttpPost]
     [ProducesResponseType(201)]
-    [ProducesResponseType(400)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Post(CreateLeaveAllocationCommand leaveAllocation)
     {
         Unit response = await _mediator.Send(leaveAllocation);
@@ -51,8 +52,8 @@ public class LeaveAllocationsController : ControllerBase
     // PUT api/<LeaveAllocationsController>/5
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(400)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult> Put(UpdateLeaveAllocationCommand leaveAllocation)
     {
@@ -63,7 +64,7 @@ public class LeaveAllocationsController : ControllerBase
     // DELETE api/<LeaveAllocationsController>/5
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult> Delete(int id)
     {

@@ -1,6 +1,6 @@
-﻿namespace HR.LeaveManagement.Application.Models.Email;
+﻿namespace HR.LeaveManagement.Application.Settings;
 
-public class EmailSetting
+public class MailSetting
 {
     public string EmailFrom { get; set; }
     public string SmtpHost { get; set; }

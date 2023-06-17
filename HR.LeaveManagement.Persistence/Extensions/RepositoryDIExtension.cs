@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
 
 public static class RepositoryDIExtension
 {
@@ -10,7 +8,7 @@ public static class RepositoryDIExtension
         IEnumerable<Type> repositoryImplementations = assembly.GetTypes()
             .Where(type => type.IsClass && !type.IsAbstract && type.Name.EndsWith("Repository"));
 
-        foreach (var implementationType in repositoryImplementations)
+        foreach (Type implementationType in repositoryImplementations)
         {
             Type? interfaceType = implementationType.GetInterfaces()
                 .FirstOrDefault(i => i.Name == $"I{implementationType.Name}");
