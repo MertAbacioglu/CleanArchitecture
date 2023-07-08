@@ -4,7 +4,6 @@ using HR.LeaveManagement.Application.Contracts.Email;
 using HR.LeaveManagement.Application.Contracts.Identity;
 using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CreateLeaveRequest;
-using HR.LeaveManagement.Application.Features.LeaveRequests.Requests.Commands;
 using HR.LeaveManagement.Application.Models.Email;
 using MediatR;
 
@@ -33,7 +32,7 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
     public async Task<Unit> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
     {
         CreateLeaveRequestCommandValidator validator = new CreateLeaveRequestCommandValidator(_leaveTypeRepository);
-        FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
+        ValidationResult validationResult = await validator.ValidateAsync(request);
 
         // Get requesting employee's id
         string employeeId = _userService.UserId;
@@ -63,7 +62,7 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         await _leaveRequestRepository.CreateAsync(leaveRequest);
 
         // send confirmation email
-        //todo : make this method
+        //todo : complete this method
         try
         {
             EmailMessage email = new EmailMessage

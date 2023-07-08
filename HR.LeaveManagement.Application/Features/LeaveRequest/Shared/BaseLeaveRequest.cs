@@ -1,6 +1,6 @@
 ﻿namespace HR.LeaveManagement.Application.Features.LeaveRequest.Shared
 {
-    public abstract class BaseLeaveRequest
+    public abstract record BaseLeaveRequest
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

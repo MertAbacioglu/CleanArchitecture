@@ -1,11 +1,11 @@
 ﻿using HR.LeaveManagement.Api.Models;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CancelLeaveRequest;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.ChangeLeaveRequestApproval;
+using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CreateLeaveRequest;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.DeleteLeaveRequest;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.UpdateLeaveRequest;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveRequestDetail;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveRequestList;
-using HR.LeaveManagement.Application.Features.LeaveRequests.Requests.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -92,7 +92,7 @@ public class LeaveRequestsController : ControllerBase
     [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Delete(int id)
     {
-        DeleteLeaveRequestCommand command = new DeleteLeaveRequestCommand { Id = id };
+        DeleteLeaveRequestCommand command = new(id);
         await _mediator.Send(command);
         return NoContent();
     }

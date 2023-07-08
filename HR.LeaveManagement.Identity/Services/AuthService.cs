@@ -50,7 +50,7 @@ public class AuthService : IAuthService
 
         JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
 
-        AuthResponse response = new AuthResponse
+        AuthResponse response = new()
         {
             Id = user.Id,
             Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
@@ -103,6 +103,18 @@ public class AuthService : IAuthService
 
         try
         {
+            throw new Exception("An error occurred during registration."); // Exception fırlatma
+
+            ApplicationUser? userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
+            if (userWithSameUserName != null)
+            {
+                return new RegistrationResponse()
+                {
+                    Errors = { $"Username '{request.UserName}' is already taken." },
+                    HasError = true
+                };
+            }
+            
             IdentityResult result = _userManager.CreateAsync(user, request.Password).Result;
 
             if (result.Succeeded)
@@ -118,7 +130,6 @@ public class AuthService : IAuthService
         }
         catch (Exception ex)
         {
-
             return new RegistrationResponse() { HasError = false, Errors = { ex.Message } };
         }
 

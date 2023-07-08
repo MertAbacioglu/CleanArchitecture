@@ -68,7 +68,7 @@ public class LeaveAllocationsController : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult> Delete(int id)
     {
-        DeleteLeaveAllocationCommand command = new DeleteLeaveAllocationCommand { Id = id };
+        DeleteLeaveAllocationCommand command = new(id);
         await _mediator.Send(command);
         return NoContent();
     }

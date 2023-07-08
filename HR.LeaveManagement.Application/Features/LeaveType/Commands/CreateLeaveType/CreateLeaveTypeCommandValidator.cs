@@ -13,7 +13,8 @@ public class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLeaveType
         RuleFor(p => p.Name)
             .NotEmpty().WithMessage("{PropertyName} is required")
             .NotNull()
-            .MaximumLength(70).WithMessage("{PropertyName} must be fewer than {ComparisonValue} characters");
+            .MaximumLength(70).WithMessage("{PropertyName} must be fewer than {MaxLength} characters")
+            .MinimumLength(3).WithMessage("{PropertyName} must be at least {MinLength} characters");
 
         RuleFor(p => p.DefaultDays)
             .LessThan(100).WithMessage("{PropertyName} cannot exceed {MaxValue}")

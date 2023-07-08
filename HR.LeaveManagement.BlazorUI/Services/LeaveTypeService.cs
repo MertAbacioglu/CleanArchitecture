@@ -43,6 +43,7 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
             return ConvertApiExceptions<Guid>(ex);
         }
 
+
     }
 
     public async Task<LeaveTypeVM> GetLeaveTypeDetails(int id)

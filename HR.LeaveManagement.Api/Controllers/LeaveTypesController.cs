@@ -67,7 +67,7 @@ public class LeaveTypesController : ControllerBase
     [ProducesResponseType(typeof(CustomProblemDetail), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
     {
-        DeleteLeaveTypeCommand command = new DeleteLeaveTypeCommand { Id = id };
+        DeleteLeaveTypeCommand command = new(id);
         await _mediator.Send(command);
         return NoContent();
     }

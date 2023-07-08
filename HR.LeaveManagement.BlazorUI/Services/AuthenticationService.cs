@@ -33,7 +33,7 @@ public class AuthenticationService : BaseHttpService, IAuthenticationService
             }
             return false;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
 
             return false;
@@ -65,7 +65,11 @@ public class AuthenticationService : BaseHttpService, IAuthenticationService
             RegistrationResponse response = await _client.RegisterAsync(registrationRequest);
             if (response.HasError)
             {
-                return new Response<RegistrationResponse>() { Success = false, ValidationErrors = response.Errors.ToList() };
+                return new Response<RegistrationResponse>()
+                {
+                    Success = false,
+                    ValidationErrors = response.Errors.ToList()
+                };
             }
             return new Response<RegistrationResponse>() { Success = true };
         }

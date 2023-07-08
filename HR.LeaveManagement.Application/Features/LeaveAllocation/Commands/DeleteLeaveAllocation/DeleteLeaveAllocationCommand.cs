@@ -1,9 +1,5 @@
 ﻿using MediatR;
 
-namespace HR.LeaveManagement.Application.Features.LeaveAllocations.Commands.DeleteLeaveAllocation
-{
-    public class DeleteLeaveAllocationCommand : IRequest
-    {
-        public int Id { get; set; }
-    }
-}
+namespace HR.LeaveManagement.Application.Features.LeaveAllocations.Commands.DeleteLeaveAllocation;
+
+public sealed record DeleteLeaveAllocationCommand(int Id) : IRequest;

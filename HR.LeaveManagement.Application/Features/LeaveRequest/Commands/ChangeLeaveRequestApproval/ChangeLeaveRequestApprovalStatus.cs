@@ -4,6 +4,7 @@ using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Exceptions;
 using HR.LeaveManagement.Application.Models.Email;
 using MediatR;
+using System.Net.Mail;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.ChangeLeaveRequestApproval;
 
@@ -52,7 +53,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
         // send confirmation email
         try
         {
-            var email = new EmailMessage
+            EmailMessage email = new()
             {
                 To = string.Empty, /* Get email from employee record */
                 Body = $"The approval status for your leave request for {leaveRequest.StartDate:D} to {leaveRequest.EndDate:D} has been updated.",

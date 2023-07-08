@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CreateLeaveRequest;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Commands.UpdateLeaveRequest;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveRequestDetail;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveRequestList;
-using HR.LeaveManagement.Application.Features.LeaveRequests.Requests.Commands;
 using HR.LeaveManagement.Domain.Entities;
 
 namespace HR.LeaveManagement.Application.MappingProfiles;

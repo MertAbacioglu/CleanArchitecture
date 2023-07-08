@@ -34,6 +34,7 @@ public static class IdentityServiceRegistration
             x.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
             x.User.RequireUniqueEmail = true;
             x.SignIn.RequireConfirmedEmail = false;
+            
         })
          .AddEntityFrameworkStores<HrLeaveManagementIdentityDbContext>()
          .AddDefaultTokenProviders();

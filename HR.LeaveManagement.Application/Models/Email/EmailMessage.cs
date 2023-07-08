@@ -1,6 +1,6 @@
 ﻿namespace HR.LeaveManagement.Application.Models.Email;
 
-public class EmailMessage
+public sealed record EmailMessage
 {
     public string To { get; set; }
     public string Subject { get; set; }

@@ -46,7 +46,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CancelLe
             // send confirmation email
             try
             {
-                EmailMessage email = new EmailMessage
+                EmailMessage email = new()
                 {
                     To = string.Empty, /* Get email from employee record */
                     Body = $"Your leave request for {leaveRequest.StartDate:D} to {leaveRequest.EndDate:D} has been cancelled successfully.",

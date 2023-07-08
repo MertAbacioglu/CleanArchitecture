@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Features.LeaveRequest.Shared;
-using HR.LeaveManagement.Application.Features.LeaveRequests.Requests.Commands;
 
 namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CreateLeaveRequest
 {
